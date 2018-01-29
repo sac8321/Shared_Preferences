@@ -1,6 +1,8 @@
 package com.example.proyecto_pc.my_login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,17 +16,21 @@ import static android.util.Patterns.EMAIL_ADDRESS;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private SharedPreferences prefs;
+
+
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Switch switchRemember;
     private Button btnLogin;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
 
+        prefs=getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
         bindUI();
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = editTextPassword.getText().toString();
                 if(login(email,password)){
                     goToMain();
+                    saveOnPrefenrences(email,password);
                 }
             }
         });
@@ -65,12 +72,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    private void saveOnPrefenrences(String email,String Password){
+        if (switchRemember.isChecked()){
+            SharedPreferences.Editor editor=prefs.edit();
+            editor.putString("email",email);
+            editor.putString("password",Password);
+            editor.apply();
+
+        }
+    }
+
     private boolean isValidEmail(String email){
         return !isEmpty(email) && EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isValinPassword (String password){
-        return password.length()>4;
+        return password.length()>=4;
     }
 
     private void goToMain(){
@@ -78,4 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
+
+
 }
