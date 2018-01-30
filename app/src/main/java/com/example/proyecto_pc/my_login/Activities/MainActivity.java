@@ -1,15 +1,14 @@
-package com.example.proyecto_pc.my_login;
+package com.example.proyecto_pc.my_login.Activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.lang.ref.PhantomReference;
+import com.example.proyecto_pc.my_login.R;
 
 
 public class MainActivity extends AppCompatActivity {

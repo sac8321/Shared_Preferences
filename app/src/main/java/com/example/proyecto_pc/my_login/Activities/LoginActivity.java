@@ -1,4 +1,4 @@
-package com.example.proyecto_pc.my_login;
+package com.example.proyecto_pc.my_login.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +12,16 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.proyecto_pc.my_login.R;
+import com.example.proyecto_pc.my_login.utils.Util;
+
 import static android.text.TextUtils.isEmpty;
 import static android.util.Patterns.EMAIL_ADDRESS;
 
 public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences prefs;
+
 
 
     private EditText editTextEmail;
@@ -49,20 +53,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setCredentialsIfExits(){
-       String email=getUserMailPrefs();
-       String password=getUserPassPrefs();
+       String email= Util.getUserMailPrefs(prefs);
+       String password=Util.getUserPassPrefs(prefs);
        if (!TextUtils.isEmpty(email) &&!TextUtils.isEmpty(password)){
            editTextEmail.setText(email);
            editTextPassword.setText(password);
        }
     }
 
-    private String getUserMailPrefs(){
-        return prefs.getString("email","");
-    }
-    private String getUserPassPrefs(){
-        return prefs.getString("password","");
-    }
 
 
 
